@@ -1,0 +1,570 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6250017755AE1F1F38B03309 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 06D2066B6F3E10946C9F6016 /* Object.cpp */; };
+		0CE662B355FB553A0EFA6B26 /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295B268663A235FD26A41694 /* imgui.cpp */; };
+		4CAB769C224167BB617C2744 /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 39431D13063B437D48617CA3 /* imgui_demo.cpp */; };
+		4D492C7610034F2924E83284 /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73D150925B56790D48177F1F /* imgui_draw.cpp */; };
+		450E22C87FAD370F5F5F687B /* imgui_tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B375F1A5840793267FB4D30 /* imgui_tables.cpp */; };
+		691255B02DC228DE40E304C7 /* imgui_widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11361C7D0293026757D64DCB /* imgui_widgets.cpp */; };
+		6E2E2DF74BBB689D21017770 /* jumpjet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F244849317C626B13AF5175 /* jumpjet.cpp */; };
+		4A1F4B6B773D489C34F80BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09EB28C613AF657226C01926 /* Foundation.framework */; };
+		5DB3485372CF0D831B92227A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74CE01FF471C282C6E1C7E18 /* AppKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		66C2639A2994734573807701 /* premake4.lua */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.lua; name = "premake4.lua"; path = "../../premake4.lua"; sourceTree = "<group>"; };
+		47A27BAE64D860E770421225 /* orxBundleData.inc */ = {isa = PBXFileReference; lastKnownFileType = text; name = "orxBundleData.inc"; path = "../../../include/orxBundleData.inc"; sourceTree = "<group>"; };
+		1178689D403D71801B260D7E /* CreationTemplate.ini */ = {isa = PBXFileReference; lastKnownFileType = text; name = "CreationTemplate.ini"; path = "../../../data/config/CreationTemplate.ini"; sourceTree = "<group>"; };
+		00846FB56F5F6DE440321E97 /* SettingsTemplate.ini */ = {isa = PBXFileReference; lastKnownFileType = text; name = "SettingsTemplate.ini"; path = "../../../data/config/SettingsTemplate.ini"; sourceTree = "<group>"; };
+		4C8D51812798068D2D1D06AC /* jumpjet.ini */ = {isa = PBXFileReference; lastKnownFileType = text; name = "jumpjet.ini"; path = "../../../data/config/jumpjet.ini"; sourceTree = "<group>"; };
+		2D8E496D14EF042C6FB643A5 /* jumpjetd.ini */ = {isa = PBXFileReference; lastKnownFileType = text; name = "jumpjetd.ini"; path = "../../../data/config/jumpjetd.ini"; sourceTree = "<group>"; };
+		0A4944276716059475F265F5 /* jumpjetp.ini */ = {isa = PBXFileReference; lastKnownFileType = text; name = "jumpjetp.ini"; path = "../../../data/config/jumpjetp.ini"; sourceTree = "<group>"; };
+		276216127BEB41210F443F95 /* Object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Object.h"; path = "../../../include/Object.h"; sourceTree = "<group>"; };
+		4F6518174CF900B65D227D0F /* Scroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Scroll.h"; path = "../../../include/Scroll/Scroll.h"; sourceTree = "<group>"; };
+		10F01851273D503432B527F8 /* ScrollBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ScrollBase.h"; path = "../../../include/Scroll/ScrollBase.h"; sourceTree = "<group>"; };
+		151D2CDC4785034124461EAA /* ScrollEd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ScrollEd.h"; path = "../../../include/Scroll/ScrollEd.h"; sourceTree = "<group>"; };
+		670E62F63ABC410942F31B71 /* ScrollObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ScrollObject.h"; path = "../../../include/Scroll/ScrollObject.h"; sourceTree = "<group>"; };
+		78D90CA270DC1AC2486257D9 /* imconfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "imconfig.h"; path = "../../../include/imgui/imconfig.h"; sourceTree = "<group>"; };
+		7DD4048F73A55E0863665605 /* imgui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "imgui.h"; path = "../../../include/imgui/imgui.h"; sourceTree = "<group>"; };
+		6DE171A74895369373C54749 /* imgui_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "imgui_internal.h"; path = "../../../include/imgui/imgui_internal.h"; sourceTree = "<group>"; };
+		2E117CE666250CA219AA00CC /* imstb_rectpack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "imstb_rectpack.h"; path = "../../../include/imgui/imstb_rectpack.h"; sourceTree = "<group>"; };
+		70D53635543E57310FF8204A /* imstb_textedit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "imstb_textedit.h"; path = "../../../include/imgui/imstb_textedit.h"; sourceTree = "<group>"; };
+		705A4AA2552060B739484F0C /* imstb_truetype.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "imstb_truetype.h"; path = "../../../include/imgui/imstb_truetype.h"; sourceTree = "<group>"; };
+		407C27114EED44E60ACA5BBE /* jumpjet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "jumpjet.h"; path = "../../../include/jumpjet.h"; sourceTree = "<group>"; };
+		04F456F72E893D3B6D334D96 /* lz4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "lz4.h"; path = "../../../include/lz4/lz4.h"; sourceTree = "<group>"; };
+		576878984BA9788920195339 /* lz4hc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "lz4hc.h"; path = "../../../include/lz4/lz4hc.h"; sourceTree = "<group>"; };
+		30F617C0645B48FC316631A1 /* nuklear.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "nuklear.h"; path = "../../../include/nuklear/nuklear.h"; sourceTree = "<group>"; };
+		5BF549C75B053949160C0E76 /* orxBundle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "orxBundle.h"; path = "../../../include/orxBundle.h"; sourceTree = "<group>"; };
+		09D47E3771154C807A7A0C6F /* orxImGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "orxImGui.h"; path = "../../../include/orxImGui.h"; sourceTree = "<group>"; };
+		0AFC404F24FF6C0430E926B7 /* orxNuklear.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "orxNuklear.h"; path = "../../../include/orxNuklear.h"; sourceTree = "<group>"; };
+		6BEA75CD094000E170F248DD /* Scroll.inl */ = {isa = PBXFileReference; lastKnownFileType = text; name = "Scroll.inl"; path = "../../../include/Scroll/Scroll.inl"; sourceTree = "<group>"; };
+		4E393D65345B54F55D983404 /* ScrollBase.inl */ = {isa = PBXFileReference; lastKnownFileType = text; name = "ScrollBase.inl"; path = "../../../include/Scroll/ScrollBase.inl"; sourceTree = "<group>"; };
+		23B7645A519F544801BD4711 /* ScrollEd.inl */ = {isa = PBXFileReference; lastKnownFileType = text; name = "ScrollEd.inl"; path = "../../../include/Scroll/ScrollEd.inl"; sourceTree = "<group>"; };
+		2E165CAD0A6F387A791E3589 /* ScrollObject.inl */ = {isa = PBXFileReference; lastKnownFileType = text; name = "ScrollObject.inl"; path = "../../../include/Scroll/ScrollObject.inl"; sourceTree = "<group>"; };
+		06D2066B6F3E10946C9F6016 /* Object.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Object.cpp"; path = "../../../src/Object.cpp"; sourceTree = "<group>"; };
+		295B268663A235FD26A41694 /* imgui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "imgui.cpp"; path = "../../../src/imgui/imgui.cpp"; sourceTree = "<group>"; };
+		39431D13063B437D48617CA3 /* imgui_demo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "imgui_demo.cpp"; path = "../../../src/imgui/imgui_demo.cpp"; sourceTree = "<group>"; };
+		73D150925B56790D48177F1F /* imgui_draw.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "imgui_draw.cpp"; path = "../../../src/imgui/imgui_draw.cpp"; sourceTree = "<group>"; };
+		7B375F1A5840793267FB4D30 /* imgui_tables.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "imgui_tables.cpp"; path = "../../../src/imgui/imgui_tables.cpp"; sourceTree = "<group>"; };
+		11361C7D0293026757D64DCB /* imgui_widgets.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "imgui_widgets.cpp"; path = "../../../src/imgui/imgui_widgets.cpp"; sourceTree = "<group>"; };
+		5F244849317C626B13AF5175 /* jumpjet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "jumpjet.cpp"; path = "../../../src/jumpjet.cpp"; sourceTree = "<group>"; };
+		09EB28C613AF657226C01926 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Foundation.framework"; path = "/System/Library/Frameworks/Foundation.framework"; sourceTree = "<absolute>"; };
+		74CE01FF471C282C6E1C7E18 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AppKit.framework"; path = "/System/Library/Frameworks/AppKit.framework"; sourceTree = "<absolute>"; };
+		24F768D77C271682467A2125 /* jumpjetd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "jumpjetd"; path = "jumpjetd"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1F310A8664591176183A41EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A1F4B6B773D489C34F80BCB /* Foundation.framework in Frameworks */,
+				5DB3485372CF0D831B92227A /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4D4D0C1C2A5B6300273323AC /* jumpjet */ = {
+			isa = PBXGroup;
+			children = (
+				21014C1F2315742367194BD2 /* build */,
+				6389755B600501EC60963482 /* bundle */,
+				52D335E6315A17F35FDA100C /* config */,
+				41230FF724DB28A9757650B1 /* include */,
+				5C142AE342893A29674B07A1 /* inline */,
+				5B55361C09D0584E12592765 /* src */,
+				5A3D629875BE30EB147E7256 /* Frameworks */,
+				35D96A253DCB682F19067316 /* Products */,
+			);
+			name = "jumpjet";
+			sourceTree = "<group>";
+		};
+		21014C1F2315742367194BD2 /* build */ = {
+			isa = PBXGroup;
+			children = (
+				66C2639A2994734573807701 /* premake4.lua */,
+			);
+			name = "build";
+			sourceTree = "<group>";
+		};
+		6389755B600501EC60963482 /* bundle */ = {
+			isa = PBXGroup;
+			children = (
+				47A27BAE64D860E770421225 /* orxBundleData.inc */,
+			);
+			name = "bundle";
+			sourceTree = "<group>";
+		};
+		52D335E6315A17F35FDA100C /* config */ = {
+			isa = PBXGroup;
+			children = (
+				1178689D403D71801B260D7E /* CreationTemplate.ini */,
+				00846FB56F5F6DE440321E97 /* SettingsTemplate.ini */,
+				4C8D51812798068D2D1D06AC /* jumpjet.ini */,
+				2D8E496D14EF042C6FB643A5 /* jumpjetd.ini */,
+				0A4944276716059475F265F5 /* jumpjetp.ini */,
+			);
+			name = "config";
+			sourceTree = "<group>";
+		};
+		41230FF724DB28A9757650B1 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				276216127BEB41210F443F95 /* Object.h */,
+				7920569A3ECD337626DA4501 /* Scroll */,
+				36A33C24082A1CE9082752DC /* imgui */,
+				407C27114EED44E60ACA5BBE /* jumpjet.h */,
+				1E9E50F109FF7B3C5D2D45A7 /* lz4 */,
+				0271588250456F703DA3538A /* nuklear */,
+				5BF549C75B053949160C0E76 /* orxBundle.h */,
+				09D47E3771154C807A7A0C6F /* orxImGui.h */,
+				0AFC404F24FF6C0430E926B7 /* orxNuklear.h */,
+			);
+			name = "include";
+			sourceTree = "<group>";
+		};
+		7920569A3ECD337626DA4501 /* Scroll */ = {
+			isa = PBXGroup;
+			children = (
+				4F6518174CF900B65D227D0F /* Scroll.h */,
+				10F01851273D503432B527F8 /* ScrollBase.h */,
+				151D2CDC4785034124461EAA /* ScrollEd.h */,
+				670E62F63ABC410942F31B71 /* ScrollObject.h */,
+			);
+			name = "Scroll";
+			sourceTree = "<group>";
+		};
+		36A33C24082A1CE9082752DC /* imgui */ = {
+			isa = PBXGroup;
+			children = (
+				78D90CA270DC1AC2486257D9 /* imconfig.h */,
+				7DD4048F73A55E0863665605 /* imgui.h */,
+				6DE171A74895369373C54749 /* imgui_internal.h */,
+				2E117CE666250CA219AA00CC /* imstb_rectpack.h */,
+				70D53635543E57310FF8204A /* imstb_textedit.h */,
+				705A4AA2552060B739484F0C /* imstb_truetype.h */,
+			);
+			name = "imgui";
+			sourceTree = "<group>";
+		};
+		1E9E50F109FF7B3C5D2D45A7 /* lz4 */ = {
+			isa = PBXGroup;
+			children = (
+				04F456F72E893D3B6D334D96 /* lz4.h */,
+				576878984BA9788920195339 /* lz4hc.h */,
+			);
+			name = "lz4";
+			sourceTree = "<group>";
+		};
+		0271588250456F703DA3538A /* nuklear */ = {
+			isa = PBXGroup;
+			children = (
+				30F617C0645B48FC316631A1 /* nuklear.h */,
+			);
+			name = "nuklear";
+			sourceTree = "<group>";
+		};
+		5C142AE342893A29674B07A1 /* inline */ = {
+			isa = PBXGroup;
+			children = (
+				6BEA75CD094000E170F248DD /* Scroll.inl */,
+				4E393D65345B54F55D983404 /* ScrollBase.inl */,
+				23B7645A519F544801BD4711 /* ScrollEd.inl */,
+				2E165CAD0A6F387A791E3589 /* ScrollObject.inl */,
+			);
+			name = "inline";
+			sourceTree = "<group>";
+		};
+		5B55361C09D0584E12592765 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				06D2066B6F3E10946C9F6016 /* Object.cpp */,
+				4C691B4223D57E3425C41B6F /* imgui */,
+				5F244849317C626B13AF5175 /* jumpjet.cpp */,
+			);
+			name = "src";
+			sourceTree = "<group>";
+		};
+		4C691B4223D57E3425C41B6F /* imgui */ = {
+			isa = PBXGroup;
+			children = (
+				295B268663A235FD26A41694 /* imgui.cpp */,
+				39431D13063B437D48617CA3 /* imgui_demo.cpp */,
+				73D150925B56790D48177F1F /* imgui_draw.cpp */,
+				7B375F1A5840793267FB4D30 /* imgui_tables.cpp */,
+				11361C7D0293026757D64DCB /* imgui_widgets.cpp */,
+			);
+			name = "imgui";
+			sourceTree = "<group>";
+		};
+		5A3D629875BE30EB147E7256 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				09EB28C613AF657226C01926 /* Foundation.framework */,
+				74CE01FF471C282C6E1C7E18 /* AppKit.framework */,
+			);
+			name = "Frameworks";
+			sourceTree = "<group>";
+		};
+		35D96A253DCB682F19067316 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				24F768D77C271682467A2125 /* jumpjetd */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		20A000FE61DB01D0087B6BA4 /* jumpjet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 45FA2AA001EA5A680DBD037A /* Build configuration list for PBXNativeTarget "jumpjet" */;
+			buildPhases = (
+				745734A612845648294E00EB /* Resources */,
+				5C265DED04F735B0404B373F /* Sources */,
+				1F310A8664591176183A41EF /* Frameworks */,
+				9607AE3710C85E8F00CD1376 /* Postbuild */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "jumpjet";
+			productInstallPath = "$(HOME)/bin";
+			productName = "jumpjet";
+			productReference = 24F768D77C271682467A2125 /* jumpjetd */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "jumpjet" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 4D4D0C1C2A5B6300273323AC /* jumpjet */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				20A000FE61DB01D0087B6BA4 /* jumpjetd */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		745734A612845648294E00EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9607AE3710C85E8F00CD1376 /* Postbuild */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Postbuild;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp -f /Users/hcarty/projects/orx/code/lib/dynamic/liborx*.dylib ../../../bin";
+		};
+/* End PBXShellScriptBuildPhase section */
+/* Begin PBXSourcesBuildPhase section */
+		5C265DED04F735B0404B373F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6250017755AE1F1F38B03309 /* Object.cpp in Sources */,
+				0CE662B355FB553A0EFA6B26 /* imgui.cpp in Sources */,
+				4CAB769C224167BB617C2744 /* imgui_demo.cpp in Sources */,
+				4D492C7610034F2924E83284 /* imgui_draw.cpp in Sources */,
+				450E22C87FAD370F5F5F687B /* imgui_tables.cpp in Sources */,
+				691255B02DC228DE40E304C7 /* imgui_widgets.cpp in Sources */,
+				6E2E2DF74BBB689D21017770 /* jumpjet.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7236641F4F8A08B667DF15D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "jumpjetd";
+			};
+			name = "Debug";
+		};
+		644265EF3ABC11C00916330B /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "jumpjetp";
+			};
+			name = "Profile";
+		};
+		2FE3179279643CE365F22CE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "jumpjet";
+			};
+			name = "Release";
+		};
+		6FC463C2728D18FF325173F9 /* Bundle */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = ../../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "jumpjet";
+			};
+			name = "Bundle";
+		};
+		3F2E03EE0542483936300F96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "x86_64";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"__orxDEBUG__",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../../../../orx/code/include",
+					"../../../include/Scroll",
+					"../../../include/imgui",
+					"../../../include/nuklear",
+					"../../../include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"../../../../orx/code/lib/dynamic",
+				);
+				OBJROOT = "obj/x64/Debug";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-ffast-math",
+					"-stdlib=libc++",
+					"-gdwarf-2",
+					"-Wno-unused-function",
+					"-Wno-write-strings",
+				);
+				OTHER_LDFLAGS = (
+					"-lorxd",
+					"-stdlib=libc++",
+					"-dead_strip",
+				);
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				SYMROOT = "../../../bin";
+			};
+			name = "Debug";
+		};
+		4CB531CB345F622D29F944A5 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "x86_64";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"__orxPROFILER__",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../../../../orx/code/include",
+					"../../../include/Scroll",
+					"../../../include/imgui",
+					"../../../include/nuklear",
+					"../../../include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"../../../../orx/code/lib/dynamic",
+				);
+				OBJROOT = "obj/x64/Profile";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-ffast-math",
+					"-stdlib=libc++",
+					"-gdwarf-2",
+					"-Wno-unused-function",
+					"-Wno-write-strings",
+				);
+				OTHER_LDFLAGS = (
+					"-lorxp",
+					"-stdlib=libc++",
+					"-dead_strip",
+				);
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				SYMROOT = "../../../bin";
+			};
+			name = "Profile";
+		};
+		54F13A594744731C71E46031 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "x86_64";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../../../../orx/code/include",
+					"../../../include/Scroll",
+					"../../../include/imgui",
+					"../../../include/nuklear",
+					"../../../include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"../../../../orx/code/lib/dynamic",
+				);
+				OBJROOT = "obj/x64/Release";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-ffast-math",
+					"-stdlib=libc++",
+					"-gdwarf-2",
+					"-Wno-unused-function",
+					"-Wno-write-strings",
+				);
+				OTHER_LDFLAGS = (
+					"-lorx",
+					"-stdlib=libc++",
+					"-dead_strip",
+				);
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				SYMROOT = "../../../bin";
+			};
+			name = "Release";
+		};
+		04F71C6E26CD6ED31B8C3E62 /* Bundle */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "x86_64";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../../../../orx/code/include",
+					"../../../include/Scroll",
+					"../../../include/imgui",
+					"../../../include/nuklear",
+					"../../../include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"../../../../orx/code/lib/dynamic",
+				);
+				OBJROOT = "obj/x64/Bundle";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-ffast-math",
+					"-stdlib=libc++",
+					"-gdwarf-2",
+					"-Wno-unused-function",
+					"-Wno-write-strings",
+				);
+				OTHER_LDFLAGS = (
+					"-lorx",
+					"-stdlib=libc++",
+					"-dead_strip",
+				);
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				SYMROOT = "../../../bin";
+			};
+			name = "Bundle";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		45FA2AA001EA5A680DBD037A /* Build configuration list for PBXNativeTarget "jumpjetd" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7236641F4F8A08B667DF15D2 /* Debug */,
+				644265EF3ABC11C00916330B /* Profile */,
+				2FE3179279643CE365F22CE0 /* Release */,
+				6FC463C2728D18FF325173F9 /* Bundle */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Debug";
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "jumpjet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F2E03EE0542483936300F96 /* Debug */,
+				4CB531CB345F622D29F944A5 /* Profile */,
+				54F13A594744731C71E46031 /* Release */,
+				04F71C6E26CD6ED31B8C3E62 /* Bundle */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Debug";
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
