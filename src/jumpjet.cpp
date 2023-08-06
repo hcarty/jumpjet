@@ -21,6 +21,8 @@
 #include "orxBundle.h"
 #undef orxBUNDLE_IMPL
 
+#include "orxLDtk.h"
+
 #ifdef __orxMSVC__
 
 /* Requesting high performance dedicated GPU on hybrid laptops */
@@ -57,6 +59,12 @@ orxSTATUS jumpjet::Init()
     // Done!
     return orxSTATUS_SUCCESS;
   }
+
+  auto orxProject = orx::OrxProject("../data/texture/");
+  orx::EntityCallbacks entityCallbacks = {
+      {std::string{"Player_start"}, [](auto &entity, auto &source)
+       { orx::genericEntity::CreateConfig(entity, source, "PlayerStart"); }}};
+  orx::ldtkToConfig(orxProject, "../data/maps/level1.ldtk", entityCallbacks);
 
   // Create the scene
   CreateObject("Scene");
