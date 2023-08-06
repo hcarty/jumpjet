@@ -97,7 +97,7 @@ solution "jumpjet"
         "NoManifest",
         "FloatFast",
         "NoNativeWChar",
-        "NoExceptions",
+        -- "NoExceptions",
         "NoIncrementalLink",
         "NoEditAndContinue",
         "NoMinimalRebuild",
@@ -127,25 +127,24 @@ solution "jumpjet"
     configuration {"*Profile*"}
         targetsuffix ("p")
         defines {"__orxPROFILER__"}
-        flags {"Optimize", "NoRTTI"}
+        flags {"Optimize"}
         links {"orxp"}
 
     configuration {"*Release*"}
-        flags {"Optimize", "NoRTTI"}
+        flags {"Optimize"}
         links {"orx"}
 
     configuration {"*Bundle*"}
-        flags {"Optimize", "NoRTTI"}
+        flags {"Optimize"}
         links {"orx"}
 
     configuration {"windows", "*Release*"}
         kind ("WindowedApp")
 
-
 -- Linux
 
     configuration {"linux"}
-        buildoptions {"-Wno-unused-function"}
+        buildoptions {"-Wno-unused-function", "-std=c++20"}
         linkoptions {"-Wl,-rpath ./", "-Wl,--export-dynamic"}
         links
         {
@@ -167,7 +166,8 @@ solution "jumpjet"
             "-stdlib=libc++",
             "-gdwarf-2",
             "-Wno-unused-function",
-            "-Wno-write-strings"
+            "-Wno-write-strings",
+            "-std=c++20"
         }
         linkoptions
         {
@@ -202,7 +202,8 @@ solution "jumpjet"
         buildoptions
         {
             "/MP",
-            "/EHsc"
+            "/EHsc",
+            "/std:c++20"
         }
 
     configuration {"windows", "gmake", "x32"}
