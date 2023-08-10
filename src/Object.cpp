@@ -27,7 +27,7 @@ void Object::Update(const orxCLOCK_INFO &_rstInfo)
   orxVECTOR jumpSpeed = {0, -400, 0};
 
   // Maximum possible speed
-  orxVECTOR maxSpeedPos = {100, 200, 0};
+  orxVECTOR maxSpeedPos = {100, -jumpSpeed.fY * 2.0f, 0};
   orxVECTOR maxSpeedNeg = {-100, jumpSpeed.fY, 0};
 
   // Add world gravity
@@ -45,7 +45,7 @@ void Object::Update(const orxCLOCK_INFO &_rstInfo)
     orxVector_Mulf(&speedDelta, &speedDelta, 1000.0 * _rstInfo.fDT);
 
     // Apply jump
-    if (jump)
+    if (jump && contacts >= 1)
     {
       orxVector_Add(&speedDelta, &speedDelta, &jumpSpeed);
     }
@@ -65,4 +65,14 @@ void Object::Update(const orxCLOCK_INFO &_rstInfo)
 
   // Update object speed
   SetSpeed(speed);
+}
+
+void Object::OnCollide(ScrollObject *_poCollider, orxBODY_PART *_pstPart, orxBODY_PART *_pstColliderPart, const orxVECTOR &_rvPosition, const orxVECTOR &_rvNormal)
+{
+  contacts++;
+}
+
+void Object::OnSeparate(ScrollObject *_poCollider, orxBODY_PART *_pstPart, orxBODY_PART *_pstColliderPart)
+{
+  contacts--;
 }

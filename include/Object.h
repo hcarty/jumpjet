@@ -1,28 +1,18 @@
-/**
- * @file Object.h
- * @date 5-Aug-2023
- */
-
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
+#pragma once
 
 #include "jumpjet.h"
 
-/** Object Class
- */
 class Object : public ScrollObject
 {
 public:
-
-
 protected:
+  void OnCreate();
+  void OnDelete();
+  void Update(const orxCLOCK_INFO &_rstInfo);
 
-                void            OnCreate();
-                void            OnDelete();
-                void            Update(const orxCLOCK_INFO &_rstInfo);
-
+  void OnCollide(ScrollObject *_poCollider, orxBODY_PART *_pstPart, orxBODY_PART *_pstColliderPart, const orxVECTOR &_rvPosition, const orxVECTOR &_rvNormal);
+  void OnSeparate(ScrollObject *_poCollider, orxBODY_PART *_pstPart, orxBODY_PART *_pstColliderPart);
 
 private:
+  int contacts{0};
 };
-
-#endif // __OBJECT_H__
