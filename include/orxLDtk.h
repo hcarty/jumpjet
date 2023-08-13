@@ -7,23 +7,14 @@
 
 namespace orx
 {
-  struct OrxProject
-  {
-    const std::filesystem::path texturePath;
-
-    OrxProject(const std::filesystem::path texturePath);
-  };
-
   struct Spec
   {
-    const OrxProject orx;
-    const std::filesystem::path source;
+    const ldtk::Project &project;
     const std::string level;
     const std::string collisionLayer;
     const std::string entityLayer;
-    ldtk::Project project{};
 
-    Spec(const OrxProject orx, const std::filesystem::path &sourceFile,
+    Spec(const ldtk::Project &project,
          const std::string &levelName, const std::string &collisionLayerName,
          const std::string &entityLayerName);
   };
@@ -49,5 +40,5 @@ namespace orx
 
   using EntityCallbacks = std::map<std::string, std::function<void(const ldtk::Entity &, const Source &)>>;
 
-  void ldtkToConfig(const OrxProject &orx, const std::string &path, const EntityCallbacks &EntityCallbacks = {});
+  void ldtkToConfig(const orxSTRING mapLocation, const EntityCallbacks &entityCallbacks = {});
 };

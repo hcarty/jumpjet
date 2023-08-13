@@ -18,17 +18,10 @@ namespace orx
     return {point.x, point.y, 0.0f};
   }
 
-  OrxProject::OrxProject(const std::filesystem::path texturePath)
-      : texturePath(texturePath) {}
-
-  Spec::Spec(const OrxProject orx, const std::filesystem::path &sourceFile,
+  Spec::Spec(const ldtk::Project &project,
              const std::string &levelName, const std::string &collisionLayerName,
              const std::string &entityLayerName)
-      : orx(orx), source(sourceFile), level(levelName),
-        collisionLayer(collisionLayerName), entityLayer(entityLayerName)
-  {
-    project.loadFromFile(sourceFile);
-  }
+      : project(project), level(levelName), collisionLayer(collisionLayerName), entityLayer(entityLayerName) {}
 
   Source::Source(const Spec &spec)
       : spec(spec), project(spec.project), world(project.getWorld()),
@@ -36,23 +29,10 @@ namespace orx
         collisions(level.getLayer(spec.collisionLayer)),
         entities(level.getLayer(spec.entityLayer)) {}
 
-  const std::filesystem::path RelativePath(const std::string &path,
-                                           const Source &source)
-  {
-    const auto absPath = std::filesystem::weakly_canonical(
-        std::filesystem::path(source.spec.source).parent_path() /
-        std::filesystem::path(path));
-    const auto absBase =
-        std::filesystem::absolute(source.spec.source).parent_path();
-    const auto relative =
-        std::filesystem::relative(absPath, source.spec.orx.texturePath);
-    return relative;
-  }
-
   void SetTilesetTexture(const ldtk::Tileset &tileset, const Source &source)
   {
     orxConfig_PushSection(tileset.name.data());
-    orxConfig_SetString("Texture", RelativePath(tileset.path, source).c_str());
+    orxConfig_SetString("Texture", tileset.path.data());
     orxVECTOR size = {static_cast<float>(tileset.tile_size),
                       static_cast<float>(tileset.tile_size), orxFLOAT_0};
     orxConfig_SetVector("TextureSize", &size);
@@ -70,8 +50,7 @@ namespace orx
     orxConfig_PushSection(section.data());
 
     // Texture
-    orxConfig_SetString("Texture",
-                        RelativePath(entity.getTexturePath(), source).c_str());
+    orxConfig_SetString("Texture", entity.getTexturePath().data());
     const auto rect = entity.getTextureRect();
     const orxVECTOR origin = {static_cast<float>(rect.x),
                               static_cast<float>(rect.y), 0.0f};
@@ -419,10 +398,21 @@ namespace orx
   }
 }
 
-void orx::ldtkToConfig(const OrxProject &orx, const std::string &path, const EntityCallbacks &entityCallbacks)
+void orx::ldtkToConfig(const orxSTRING mapLocation, const EntityCallbacks &entityCallbacks)
 {
   ldtk::Project project;
-  project.loadFromFile(path);
+  {
+    // Load map resource
+    auto resourceLocation = orxResource_Locate("Map", mapLocation);
+    orxASSERT(resourceLocation != orxNULL);
+    auto handle = orxResource_Open(resourceLocation, orxFALSE);
+    auto size = orxResource_GetSize(handle);
+    std::vector<std::uint8_t> bytes(size);
+    auto read = orxResource_Read(handle, size, bytes.data(), orxNULL, orxNULL);
+    orxResource_Close(handle);
+    orxASSERT(size == read);
+    project.loadFromMemory(bytes);
+  }
   const auto &world = project.getWorld();
   const auto &levels = world.allLevels();
   for (const auto &level : levels)
@@ -434,7 +424,7 @@ void orx::ldtkToConfig(const OrxProject &orx, const std::string &path, const Ent
     const auto collisionLayerName = "Collision";
     const auto entityLayerName = "Entities";
     const auto spec =
-        Spec(orx, path, levelName, collisionLayerName, entityLayerName);
+        Spec(project, levelName, collisionLayerName, entityLayerName);
     const auto source = Source(spec);
 
     // Define entities in the game world
