@@ -60,10 +60,19 @@ orxSTATUS jumpjet::Init()
     return orxSTATUS_SUCCESS;
   }
 
-  orx::EntityCallbacks entityCallbacks = {
-      {std::string{"Player_start"}, [](auto &entity, auto &source)
-       { orx::genericEntity::CreateConfig(entity, source, "PlayerStart"); }}};
-  orx::ldtkToConfig("level1.ldtk", entityCallbacks);
+  // Initialize LDtk loading
+  orxldtk::entity::Callbacks callbacks = {
+      {std::string("Player_start"),
+       [](const ldtk::Entity &entity, const orxldtk::Source &source)
+       {
+         orxLOG("Creating config for %s", entity.getName().data());
+         orxldtk::entity::CreateDefaultConfig(entity, source, "PlayerStart");
+       }}};
+
+  orxLDtk_Init(callbacks);
+
+  // Load the world
+  CreateObject("World");
 
   // Create the scene
   CreateObject("Scene");
@@ -84,6 +93,9 @@ orxSTATUS jumpjet::Run()
  */
 void jumpjet::Exit()
 {
+  // Exit from LDtk
+  orxLDtk_Exit();
+
   // Exit from Nuklear
   orxNuklear_Exit();
 

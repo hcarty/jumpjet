@@ -4,9 +4,11 @@
 #include <string>
 #include <vector>
 
+#include "orx.h"
+
 #include "orxLDtk.h"
 
-namespace orx
+namespace orxldtk
 {
   const orxVECTOR IntPointToVector(const ldtk::IntPoint &point)
   {
@@ -18,16 +20,17 @@ namespace orx
     return {point.x, point.y, 0.0f};
   }
 
-  Spec::Spec(const ldtk::Project &project,
-             const std::string &levelName, const std::string &collisionLayerName,
-             const std::string &entityLayerName)
-      : project(project), level(levelName), collisionLayer(collisionLayerName), entityLayer(entityLayerName) {}
-
-  Source::Source(const Spec &spec)
-      : spec(spec), project(spec.project), world(project.getWorld()),
-        level(world.getLevel(spec.level)), layers(level.allLayers()),
-        collisions(level.getLayer(spec.collisionLayer)),
-        entities(level.getLayer(spec.entityLayer)) {}
+  Source::Source(const ldtk::Project &project,
+                 const std::string &levelName, const std::string &collisionLayerName,
+                 const std::string &entityLayerName)
+      : project(project),
+        world(project.getWorld()),
+        level(world.getLevel(levelName)),
+        layers(level.allLayers()),
+        collisions(level.getLayer(collisionLayerName)),
+        entities(level.getLayer(entityLayerName))
+  {
+  }
 
   void SetTilesetTexture(const ldtk::Tileset &tileset, const Source &source)
   {
@@ -156,7 +159,7 @@ namespace orx
                                       const Source &source)
   {
     const auto gridPosition = tile.getGridPosition();
-    return tileset.name + "." + source.spec.level + "." +
+    return tileset.name + "." + source.level.name + "." +
            std::to_string(gridPosition.x) + "." + std::to_string(gridPosition.y);
   }
 
@@ -277,7 +280,7 @@ namespace orx
     return position;
   }
 
-  namespace genericEntity
+  namespace entity
   {
     void AddConfigFields(const ldtk::Entity &entity)
     {
@@ -335,7 +338,7 @@ namespace orx
       return section + inherit;
     }
 
-    void CreateConfig(const ldtk::Entity &entity, const Source &source, const std::string sectionName)
+    void CreateDefaultConfig(const ldtk::Entity &entity, const Source &source, const std::string sectionName)
     {
       orxConfig_PushSection((sectionName).data());
 
@@ -377,86 +380,141 @@ namespace orx
     }
   }
 
-  void CreateEntitySections(const Source &source, const EntityCallbacks &callbacks)
+  void CreateEntitySections(const Source &source)
   {
     const std::vector<ldtk::Entity> &entities = source.entities.allEntities();
 
     for (const auto &entity : entities)
     {
-      if (callbacks.contains(entity.getName()))
+      if (entity::callbacks.contains(entity.getName()))
       {
-        auto CreateConfig = callbacks.at(entity.getName());
+        auto CreateConfig = entity::callbacks.at(entity.getName());
         CreateConfig(entity, source);
       }
       else
       {
         orxLOG("No specific support for entity %s, adding generic config", entity.getName().data());
-        genericEntity::CreateConfig(entity, source, genericEntity::DefaultConfigSection(entity, source));
-        genericEntity::AddToEntityList(entity, source);
+        entity::CreateDefaultConfig(entity, source, entity::DefaultConfigSection(entity, source));
+        entity::AddToEntityList(entity, source);
       }
     }
+  }
+
+  void ldtkToConfig(const orxSTRING mapLocation)
+  {
+    ldtk::Project project;
+    {
+      // Load map resource
+      auto resourceLocation = orxResource_Locate("Map", mapLocation);
+      orxASSERT(resourceLocation != orxNULL);
+      auto handle = orxResource_Open(resourceLocation, orxFALSE);
+      auto size = orxResource_GetSize(handle);
+      std::vector<std::uint8_t> bytes(size);
+      auto read = orxResource_Read(handle, size, bytes.data(), orxNULL, orxNULL);
+      orxResource_Close(handle);
+      orxASSERT(size == read);
+      project.loadFromMemory(bytes);
+    }
+    const auto &world = project.getWorld();
+    const auto &levels = world.allLevels();
+    for (const auto &level : levels)
+    {
+      AddToAllLevels(level);
+      AddLevelNeighbors(level);
+
+      const auto levelName = level.name.data();
+      const auto collisionLayerName = "Collision";
+      const auto entityLayerName = "Entities";
+      const auto source = Source(project, levelName, collisionLayerName, entityLayerName);
+
+      // Define entities in the game world
+      CreateEntitySections(source);
+
+      // Define physics collision body for tiles
+      const auto tileBodyName = std::string("TileCollisionBody");
+      SetTileStaticBody(tileBodyName);
+
+      for (const auto &layer : source.layers)
+      {
+        orxLOG("Processing layer %s", layer.getName().data());
+
+        // Generate config for each tile
+        for (const auto &tile : layer.allTiles())
+        {
+          // Define texture source for tiles
+          SetTilesetTexture(layer.getTileset(), source);
+
+          // Generate graphics config in case it does not exist yet
+          const auto graphicSection =
+              TileGraphicSection(tile, layer.getTileset());
+          SetTileGraphic(tile, layer.getTileset());
+
+          // Generate object config for this tile
+          const auto objectSection =
+              TileObjectSection(tile, layer.getTileset(), source);
+          SetTileObject(tile, layer, tileBodyName, source);
+
+          // Push all the tiles as children for a single object
+          AddToAllObjects(levelName, objectSection);
+        }
+      }
+    }
+  }
+
+  orxSTATUS EventHandler(const orxEVENT *_pstEvent)
+  {
+    orxSTATUS eResult = orxSTATUS_SUCCESS;
+
+    // Object?
+    if (_pstEvent->eType == orxEVENT_TYPE_OBJECT)
+    {
+      // New object?
+      if (_pstEvent->eID == orxOBJECT_EVENT_PREPARE)
+      {
+        // Is a LDtk object?
+        if (orxConfig_HasValue("LDtk"))
+        {
+          ldtkToConfig(orxConfig_GetString("LDtk"));
+        }
+      }
+    }
+
+    // Done!
+    return eResult;
+  }
+
+  void Init(const entity::Callbacks &callbacks)
+  {
+    // Record entity-specific callbacks
+    entity::callbacks = callbacks;
+
+    // Registers LDtk event handler
+    orxEvent_AddHandler(orxEVENT_TYPE_OBJECT, EventHandler);
+    orxEvent_SetHandlerIDFlags(EventHandler, orxEVENT_TYPE_OBJECT, orxNULL, orxEVENT_GET_FLAG(orxOBJECT_EVENT_PREPARE), orxEVENT_KU32_MASK_ID_ALL);
+
+    // Done!
+    return;
+  }
+
+  void Exit()
+  {
+    // Clear all callbacks
+    entity::callbacks.clear();
+
+    // Unregister LDtk event handler
+    orxEvent_RemoveHandler(orxEVENT_TYPE_OBJECT, EventHandler);
+
+    // Done!
+    return;
   }
 }
 
-void orx::ldtkToConfig(const orxSTRING mapLocation, const EntityCallbacks &entityCallbacks)
+void orxFASTCALL orxLDtk_Init(const orxldtk::entity::Callbacks &callbacks)
 {
-  ldtk::Project project;
-  {
-    // Load map resource
-    auto resourceLocation = orxResource_Locate("Map", mapLocation);
-    orxASSERT(resourceLocation != orxNULL);
-    auto handle = orxResource_Open(resourceLocation, orxFALSE);
-    auto size = orxResource_GetSize(handle);
-    std::vector<std::uint8_t> bytes(size);
-    auto read = orxResource_Read(handle, size, bytes.data(), orxNULL, orxNULL);
-    orxResource_Close(handle);
-    orxASSERT(size == read);
-    project.loadFromMemory(bytes);
-  }
-  const auto &world = project.getWorld();
-  const auto &levels = world.allLevels();
-  for (const auto &level : levels)
-  {
-    AddToAllLevels(level);
-    AddLevelNeighbors(level);
+  return orxldtk::Init(callbacks);
+}
 
-    const auto levelName = level.name.data();
-    const auto collisionLayerName = "Collision";
-    const auto entityLayerName = "Entities";
-    const auto spec =
-        Spec(project, levelName, collisionLayerName, entityLayerName);
-    const auto source = Source(spec);
-
-    // Define entities in the game world
-    CreateEntitySections(source, entityCallbacks);
-
-    // Define physics collision body for tiles
-    const auto tileBodyName = std::string("TileCollisionBody");
-    SetTileStaticBody(tileBodyName);
-
-    for (const auto &layer : source.layers)
-    {
-      orxLOG("Processing layer %s", layer.getName().data());
-
-      // Generate config for each tile
-      for (const auto &tile : layer.allTiles())
-      {
-        // Define texture source for tiles
-        SetTilesetTexture(layer.getTileset(), source);
-
-        // Generate graphics config in case it does not exist yet
-        const auto graphicSection =
-            TileGraphicSection(tile, layer.getTileset());
-        SetTileGraphic(tile, layer.getTileset());
-
-        // Generate object config for this tile
-        const auto objectSection =
-            TileObjectSection(tile, layer.getTileset(), source);
-        SetTileObject(tile, layer, tileBodyName, source);
-
-        // Push all the tiles as children for a single object
-        AddToAllObjects(levelName, objectSection);
-      }
-    }
-  }
+void orxFASTCALL orxLDtk_Exit()
+{
+  return orxldtk::Exit();
 }

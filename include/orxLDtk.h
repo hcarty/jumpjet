@@ -1,27 +1,13 @@
-#include <filesystem>
-#include <string>
+#pragma once
 
 #include "orx.h"
 
 #include "LDtkLoader/Project.hpp"
 
-namespace orx
+namespace orxldtk
 {
-  struct Spec
-  {
-    const ldtk::Project &project;
-    const std::string level;
-    const std::string collisionLayer;
-    const std::string entityLayer;
-
-    Spec(const ldtk::Project &project,
-         const std::string &levelName, const std::string &collisionLayerName,
-         const std::string &entityLayerName);
-  };
-
   struct Source
   {
-    const Spec &spec;
     const ldtk::Project &project;
     const ldtk::World &world;
     const ldtk::Level &level;
@@ -29,16 +15,23 @@ namespace orx
     const ldtk::Layer &collisions;
     const ldtk::Layer &entities;
 
-    Source(const Spec &spec);
+    Source(const ldtk::Project &project,
+           const std::string &levelName, const std::string &collisionLayerName,
+           const std::string &entityLayerName);
   };
 
-  namespace genericEntity
+  namespace entity
   {
     std::string DefaultConfigSection(const ldtk::Entity &entity, const Source &source);
-    void CreateConfig(const ldtk::Entity &entity, const Source &source, const std::string sectionName);
-  };
+    void CreateDefaultConfig(const ldtk::Entity &entity, const Source &source, const std::string sectionName);
 
-  using EntityCallbacks = std::map<std::string, std::function<void(const ldtk::Entity &, const Source &)>>;
+    using Callbacks = std::map<std::string, std::function<void(const ldtk::Entity &, const Source &)>>;
+    static Callbacks callbacks;
+  }
 
-  void ldtkToConfig(const orxSTRING mapLocation, const EntityCallbacks &entityCallbacks = {});
-};
+  void Init(const orxldtk::entity::Callbacks &callbacks);
+  void Exit();
+}
+
+void orxLDtk_Init(const orxldtk::entity::Callbacks &callbacks);
+void orxLDtk_Exit();
