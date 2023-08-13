@@ -10,6 +10,11 @@
 
 namespace orxldtk
 {
+  auto RESOURCE_GROUP = "Map";
+  auto CONFIG_LDTK_NAME = "LDtk";
+  auto CONFIG_COLLISION_LAYER = "CollisionLayer";
+  auto CONFIG_ENTITY_LAYER = "EntityLayer";
+
   const orxVECTOR IntPointToVector(const ldtk::IntPoint &point)
   {
     return {static_cast<float>(point.x), static_cast<float>(point.y), 0.0f};
@@ -35,10 +40,10 @@ namespace orxldtk
   void SetTilesetTexture(const ldtk::Tileset &tileset, const Source &source)
   {
     orxConfig_PushSection(tileset.name.data());
-    orxConfig_SetString("Texture", tileset.path.data());
+    orxConfig_SetString(orxGRAPHIC_KZ_CONFIG_TEXTURE_NAME, tileset.path.data());
     orxVECTOR size = {static_cast<float>(tileset.tile_size),
                       static_cast<float>(tileset.tile_size), orxFLOAT_0};
-    orxConfig_SetVector("TextureSize", &size);
+    orxConfig_SetVector(orxGRAPHIC_KZ_CONFIG_TEXTURE_SIZE, &size);
     orxConfig_PopSection();
   }
 
@@ -53,19 +58,19 @@ namespace orxldtk
     orxConfig_PushSection(section.data());
 
     // Texture
-    orxConfig_SetString("Texture", entity.getTexturePath().data());
+    orxConfig_SetString(orxGRAPHIC_KZ_CONFIG_TEXTURE_NAME, entity.getTexturePath().data());
     const auto rect = entity.getTextureRect();
     const orxVECTOR origin = {static_cast<float>(rect.x),
                               static_cast<float>(rect.y), 0.0f};
     const orxVECTOR size = {static_cast<float>(rect.width),
                             static_cast<float>(rect.height), 0.0f};
-    orxConfig_SetVector("TextureOrigin", &origin);
-    orxConfig_SetVector("TextureSize", &size);
+    orxConfig_SetVector(orxGRAPHIC_KZ_CONFIG_TEXTURE_ORIGIN, &origin);
+    orxConfig_SetVector(orxGRAPHIC_KZ_CONFIG_TEXTURE_SIZE, &size);
 
     // Pivot
     auto pivot = FloatPointToVector(entity.getPivot());
     orxVector_Mul(&pivot, &pivot, &size);
-    orxConfig_SetVector("Pivot", &pivot);
+    orxConfig_SetVector(orxGRAPHIC_KZ_CONFIG_PIVOT, &pivot);
 
     orxConfig_PopSection();
   }
@@ -168,8 +173,7 @@ namespace orxldtk
     auto id = tile.tileId;
     orxConfig_PushSection(TileGraphicSectionWithInherit(tile, tileset).data());
     const auto origin = IntPointToVector(tileset.getTileTexturePos(id));
-    orxConfig_SetVector("TextureOrigin", &origin);
-    // orxConfig_SetString("Pivot", "center");
+    orxConfig_SetVector(orxGRAPHIC_KZ_CONFIG_TEXTURE_ORIGIN, &origin);
     const auto flip = TileFlip(tile);
     if (flip)
       orxConfig_SetString("Flip", flip.value().data());
@@ -423,8 +427,8 @@ namespace orxldtk
       AddLevelNeighbors(level);
 
       const auto levelName = level.name.data();
-      const auto collisionLayerName = "Collision";
-      const auto entityLayerName = "Entities";
+      const auto collisionLayerName = orxConfig_GetString(CONFIG_COLLISION_LAYER);
+      const auto entityLayerName = orxConfig_GetString(CONFIG_ENTITY_LAYER);
       const auto source = Source(project, levelName, collisionLayerName, entityLayerName);
 
       // Define entities in the game world
@@ -472,9 +476,11 @@ namespace orxldtk
       if (_pstEvent->eID == orxOBJECT_EVENT_PREPARE)
       {
         // Is a LDtk object?
-        if (orxConfig_HasValue("LDtk"))
+        if (orxConfig_HasValue(CONFIG_LDTK_NAME) &&
+            orxConfig_HasValue(CONFIG_COLLISION_LAYER) &&
+            orxConfig_HasValue(CONFIG_ENTITY_LAYER))
         {
-          ldtkToConfig(orxConfig_GetString("LDtk"));
+          ldtkToConfig(orxConfig_GetString(CONFIG_LDTK_NAME));
         }
       }
     }
