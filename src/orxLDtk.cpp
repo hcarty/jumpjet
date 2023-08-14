@@ -14,6 +14,7 @@ namespace orxldtk
   auto CONFIG_LDTK_NAME = "LDtk";
   auto CONFIG_COLLISION_LAYER = "CollisionLayer";
   auto CONFIG_ENTITY_LAYER = "EntityLayer";
+  auto CONFIG_LEVELS_OBJECT = "LevelsObject";
 
   const orxVECTOR IntPointToVector(const ldtk::IntPoint &point)
   {
@@ -259,10 +260,9 @@ namespace orxldtk
 
   void AddToAllLevels(const ldtk::Level &level)
   {
-    auto allLevelsSection = "AllLevels";
     auto levelSection = AllObjectSection(level.name);
     const orxSTRING c_levelSection = levelSection.data();
-    orxConfig_PushSection(allLevelsSection);
+    orxConfig_PushSection(orxConfig_GetString(CONFIG_LEVELS_OBJECT));
     orxConfig_AppendListString("ChildList", &c_levelSection, 1);
     orxConfig_PopSection();
   }
