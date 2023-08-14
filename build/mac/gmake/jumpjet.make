@@ -117,6 +117,7 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/jumpjet.o \
+	$(OBJDIR)/LDtkWorld.o \
 	$(OBJDIR)/orxLDtk.o \
 	$(OBJDIR)/Object.o \
 	$(OBJDIR)/game.o \
@@ -200,6 +201,10 @@ $(GCH): $(PCH)
 endif
 
 $(OBJDIR)/jumpjet.o: ../../../src/jumpjet.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+
+$(OBJDIR)/LDtkWorld.o: ../../../src/LDtkWorld.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

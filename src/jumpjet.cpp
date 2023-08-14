@@ -23,6 +23,8 @@
 
 #include "orxLDtk.h"
 
+#include "LDtkWorld.h"
+
 #ifdef __orxMSVC__
 
 /* Requesting high performance dedicated GPU on hybrid laptops */
@@ -61,18 +63,7 @@ orxSTATUS jumpjet::Init()
   }
 
   // Initialize LDtk loading
-  orxldtk::entity::Callbacks callbacks = {
-      {std::string("Player_start"),
-       [](const ldtk::Entity &entity, const orxldtk::Source &source)
-       {
-         orxLOG("Creating config for %s", entity.getName().data());
-         orxldtk::entity::CreateDefaultConfig(entity, source, "PlayerStart");
-       }}};
-
-  orxLDtk_Init(callbacks);
-
-  // Load the world
-  CreateObject("World");
+  orxLDtk_Init(ldtkworld::GetCallbacks());
 
   // Create the scene
   CreateObject("Scene");
